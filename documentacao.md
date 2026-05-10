@@ -1,12 +1,12 @@
-# Modelo Padrão de Documentação – Projeto Final ADS/SPI/CD
+# Documentação Parcial do Projeto Final
 
 ## 1. Capa
 
 * **Nome da instituição**: Senac
-* **Curso**: 
+* **Curso**: Ciencia de Dados
 * **Nome do projeto**: DescarteCerto
 * **Nome dos integrantes**: Danton Rodrigues
-* **Professor orientador**: 
+* **Professor orientador**: Luciano Zanuz
 * **Data**: 
 
 # 2. Resumo do Projeto
