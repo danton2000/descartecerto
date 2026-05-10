@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{#vai herdar tudo que está nessa pagina html, e vai usar no index.html #}
+{% set pageId = "page-search-results" %}
+{# criando variaveis #}
+
+{% block title %}
+    <title>Resultado da pesquisa</title>
+{% endblock title %}
+
+{% block styles %}
+    {# tira esse aqui, e coloca la no layout.html #}
+    <link rel="stylesheet" href="/styles/search-results.css">
+{% endblock styles %}
+
+{% block content %}
+    {# bloco de conteudo #}
+    {% include "partials/page-header.html" %}
+
+    <main>
+
+        {% if total > 0 %}
+            {# qual a condição, se total for maior que 0 vai mostrar os pontos #}
+            <h4>
+                <strong>{{ total }}
+                    pontos</strong>
+                encontrados
+            </h4>
+
+            <div class="cards">
+                {# estrutura de repetição do Nunjucks #}
+                {% for place in places %}
+                    {#  iterator = array, places = dados do banco #}
+
+                    <div class="card">
+                        <img src="{{ place.image }}" alt="{{ place.image }}">
+                        <h1>{{ place.name }}</h1>
+                        <h3>{{ place.items }}</h3>
+                        <p>
+                            {{ place.city }},
+                            {{ place.state }}
+                            <br>
+                            {{ place.address }}
+                            <br>
+                            {{ place.address2 }}
+                        </p>
+                    </div>
+
+                {% endfor %}
+            </div>
+            
+        {% else %}
+            <h4><Strong>Nenhum</Strong> local encontrado</h4>
+        {% endif %}
+
+    </main>
+{% endblock content %}
