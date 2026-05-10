@@ -40,9 +40,9 @@ Facilitar o acesso a informações sobre pontos de coleta de materiais recicláv
   - Cadastro de pontos de coleta com informações detalhadas.
   - Busca de pontos de coleta por localização.
 * **Fluxo do usuário**:
-  1. O usuário acessa a página inicial.
-  2. Pode cadastrar um novo ponto de coleta ou buscar pontos existentes.
-  3. O sistema exibe os resultados ou confirma o cadastro.
+  - O usuário acessa a página inicial.
+  - Pode cadastrar um novo ponto de coleta ou buscar pontos existentes.
+  - O sistema exibe os resultados ou confirma o cadastro.
 
 # 7. Arquitetura
 
