@@ -1,6 +1,6 @@
 :root{
-    --title-color: #322153;
-    --primary-color: #34cb79;
+    --title-color: #222222;
+    --primary-color: #888888;
 }
 
 *{
@@ -9,25 +9,18 @@
     box-sizing: border-box;
 }
 
-html {
-    font-family: Roboto, sans-serif;
+html{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
 body{
-    background: #f0f0f5;
+    background: #ffffff;
+    color: var(--title-color);
     -webkit-font-smoothing: antialiased;
 }
 
-a{
-    text-decoration: none;
-}
+a{ text-decoration: none; color: inherit; }
 
-h1,h2,h3,h4,h5,h6{
-    color: var(--title-color);
-    font-family: Ubuntu, sans-serif;
-}
-
-/*BOX MODEL, MODELO DE CAIXA, todo caixa tem largura, 
-altura, espaçamento, preenchimento, bordas, cor, fundo, e alinhamentos maneira que é vista pelo html(display)*/
+h1,h2,h3,h4,h5,h6{ color: var(--title-color); }
 
 

@@ -1,155 +1,78 @@
 #page-create-point{
     width: 90%;
     max-width: 1100px;
-    /*ALINHAMENTO DE CAIXA (PELO LADO DE FORA DA CAIXA)*/
     margin: 0 auto;
 }
 
 #page-create-point header{
-    margin-top: 48px;
+    margin-top: 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#page-create-point header a{
-    color: var(--title-color);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-}
-
-#page-create-point header a span{
-    margin-right: 16px;
-    background-image: url('../icones/arrow-left.svg');
-    width: 20px;
-    height: 24px;
-    display: flex;
-}
+#page-create-point header a{ color: var(--title-color); font-weight: bold; display:flex; align-items:center; }
 
 form{
-    background-color: white;
-    margin: 80px auto;
-    padding: 64px;
-    border-radius: 8px;
+    background-color: #ffffff;
+    margin: 48px auto;
+    padding: 32px;
+    border-radius: 6px;
     max-width: 730px;
     box-sizing: border-box;
 }
 
-form h1{
-    font-size: 36px;
-}
+form h1{ font-size: 28px; color: var(--title-color); }
 
-form fieldset{
-    margin-top: 64px;
-    border: 0;
-}
+form fieldset{ margin-top: 32px; border: 0; }
 
-form legend{
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
+form legend{ margin-bottom: 24px; display:flex; align-items:center; justify-content:space-between; }
 
-form legend h2{
-    font-size: 24px;
-}
+form .field{ flex:1; display:flex; flex-direction:column; margin-bottom:16px; }
 
-form legend span{
-    font-size: 14px;
-    color: var(--title-color);
-
-}
-
-form .field{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 24px;
-}
-
-form .field-group{
-    display: flex;
-}
+form .field-group{ display:flex; gap: 16px; }
 
 form input, form select{
-    background-color: #f0f0f5;
-    border: 0;
-    padding: 16px 24px;
-    font-size: 16px;
-    /* outline: none; */
-    border-radius: 8px;
-}
-
-form select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-form label{
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 12px 16px;
     font-size: 14px;
-    margin-bottom: 8px;
+    border-radius: 6px;
 }
 
-form .field-group .field + .field{
-    margin-left: 24px;
-}
+form label{ font-size: 13px; margin-bottom:8px; color:#333; }
 
 form button{
-    width: 260px;
-    height: 56px;
-    background-color: var(--primary-color);
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
+    width: 220px;
+    height: 44px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    color: #222;
+    font-weight: 600;
+    font-size: 14px;
     border: 0px;
-    margin-top: 40px;
-    transition: background-color 400ms;
+    margin-top: 24px;
 }
 
-form button:hover{
-    background-color: #2fb86e;
-}
-
-.items-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px
-}
+.items-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px }
 
 .items-grid li{
-    background-color: #c6f3c2;
+    background-color: #f8f8f8;
     list-style: none;
-    border: 2px solid #f5f5f5;
-    border-radius: 8px;
-    height: 180px;
-    padding: 32px 24px 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    height: 140px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     text-align: center;
-    cursor: pointer
+    cursor: pointer;
 }
 
-.items-grid li span{
-    margin-top: 12px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    color: var(--title-color);
-}
+.items-grid li span{ margin-top:8px; color:#333; }
 
-.items-grid li.selected{
-    background: #e1faec;
-    border: 2px solid #34cb79;
-}
+.items-grid li.selected{ background: #efefef; border-color: #cfcfcf; }
 
-.items-grid li img,
-.items-grid li span{
-    pointer-events: none;
-}
+.items-grid li img, .items-grid li span{ pointer-events: none; }
