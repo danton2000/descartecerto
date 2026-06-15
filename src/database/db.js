@@ -1,82 +1,117 @@
-// importar a dependencia do sqlite3
-const sqlite3 = require("sqlite3").verbose()//vai retornar um objeto e retornar na variavel sqlite3,função dentro de um objeto se chama metodo, verbose é um metodo que mostra mensagens no terminal
+const path = require("path")
+const dbPath = path.join(__dirname, "database.db")
 
-//criar o objeto que irá fazer operações no baanco de dados
-const db = new sqlite3.Database("src/database/database.db")//está atribuindo a constante para o objeto(db), new faz iniciar um objeto
+function createFallbackDatabase() {
+    const state = {
+        places: []
+    }
 
-module.exports = db //exportando o objeto db
+    const fallbackDb = {
+        run(query, params, callback) {
+            if (typeof params === "function") {
+                callback = params
+                params = []
+            }
 
-//utilizar o objeto banco de dados, para nosssas operações
-// db.serialize(() => {//metodo, vai rodar uma sequencia de código
-//     //criar uma tabela com comando SQL, tabela local de coleta, PASSO A PASSO
-//     db.run(`
-//         CREATE TABLE IF NOT EXISTS places (
-//             id INTEGER PRIMARY KEY AUTOINCREMENT,
-//             image TEXT,
-//             name TEXT,
-//             address TEXT,
-//             address2 TEXT,
-//             state TEXT,
-//             city TEXT,
-//             items TEXT
-//         );
-//     `)//run vai vai fazer a operação SQL
+            const normalizedQuery = query.trim().toUpperCase()
 
+            if (normalizedQuery.startsWith("CREATE TABLE")) {
+                if (typeof callback === "function") {
+                    callback.call(fallbackDb, null)
+                }
+                return fallbackDb
+            }
 
-//     //inserir dados na tabela
-//     oncst query = `
-//         INSERT INTO places (
-//             image,
-//             name,
-//             address,
-//             address2,
-//             state,
-//             city,
-//             items
-//         ) VALUES (?,?,?,?,?,?,?); 
-//     `
+            if (normalizedQuery.startsWith("INSERT INTO")) {
+                const values = Array.isArray(params) ? params : []
+                const columnsMatch = query.match(/INSERT\s+INTO\s+places\s*\(([^)]*)\)/i)
 
-//     const values = [
-//         "https://images.unsplash.com/photo-1567393528677-d6adae7d4a0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-//         "Papersider",
-//         "Guilherme Gembaila, Jardin América",
-//         "Número 260",
-//         "Santa Catarina",
-//         "Rio do Sul",
-//         "Papéis e Papelão"
-//     ]
+                if (columnsMatch) {
+                    const columns = columnsMatch[1].split(",").map((item) => item.trim())
+                    const record = {}
 
-//     function afterInsertData(err){
-//         //depois de inserir dados
-//         if(err){
-//             return console.log(err)
-//         }
-//         //caso não aja erro
-//         console.log("Cadastrado com sucesso")
-//         console.log(this)//objeto this, está referencia a resposta do run
+                    columns.forEach((column, index) => {
+                        record[column] = values[index]
+                    })
 
-//     }
-//     //callback chama essa função de volta, depois de fazer a query e value, função com parametro, vai ser chamado depois de um certo tempo
-//     db.run(query, values, afterInsertData) //afterInsertData só vai ser executada no final,call back, insira os dados
+                    state.places.push(record)
+                }
 
-//     //consultar os dados da tabela, selecionar todos
-//     db.all(`SELECT * FROM places`, function(err, rows){//rows = registro(1)
-//         if(err){
-//             return console.log(err)
-//         }
-//         //caso não aja erro
-//         console.log("Aqui estão seus registros:")
-//         console.log(rows)//objeto this, está referencia a resposta do run
-//     })
+                if (typeof callback === "function") {
+                    callback.call(fallbackDb, null)
+                }
+                return fallbackDb
+            }
 
-//     //Deletar um dado da tabela
-//     db.run(`DELETE FROM places WHERE id = ?`, [58], function (err){
-//         if(err){
-//             return console.log(err)
-//         }
-//         //caso não aja erro
-//         console.log("Registro deletado com sucesso!")
-//     })
-// })
+            if (typeof callback === "function") {
+                callback.call(fallbackDb, null)
+            }
+            return fallbackDb
+        },
+
+        all(query, callback) {
+            if (typeof callback !== "function") {
+                return fallbackDb
+            }
+
+            const searchMatch = query.match(/WHERE\s+city\s+LIKE\s+'%([^%]+)%'/i)
+            let rows = [...state.places]
+
+            if (searchMatch) {
+                const searchValue = searchMatch[1].toLowerCase()
+                rows = rows.filter((place) => {
+                    const city = place.city || ""
+                    return city.toLowerCase().includes(searchValue)
+                })
+            }
+
+            callback(null, rows)
+            return fallbackDb
+        },
+
+        serialize(callback) {
+            if (typeof callback === "function") {
+                callback()
+            }
+            return fallbackDb
+        },
+
+        close(callback) {
+            if (typeof callback === "function") {
+                callback(null)
+            }
+            return fallbackDb
+        }
+    }
+
+    return fallbackDb
+}
+
+let db
+
+try {
+    const sqlite3 = require("sqlite3").verbose()
+    db = new sqlite3.Database(dbPath)
+
+    db.serialize(() => {
+        db.run(`
+            CREATE TABLE IF NOT EXISTS places (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                image TEXT,
+                name TEXT,
+                address TEXT,
+                address2 TEXT,
+                state TEXT,
+                city TEXT,
+                items TEXT
+            );
+        `)
+    })
+} catch (error) {
+    console.warn("sqlite3 não disponível. Usando armazenamento em memória.")
+    db = createFallbackDatabase()
+}
+
+module.exports = db
 
 

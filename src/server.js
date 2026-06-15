@@ -109,5 +109,30 @@ server.get("/search", (req, res) => {//get verbo http, jeito de conversa com o h
 
 //ligar o servidor
 //npm start
-server.listen(3000)//faz o servidor ligar na porta 3000 , executa essa função de ligar o servidor, ou fica ouvindo na porta 3000
+const port = Number(process.env.PORT || 3000)
+const maxPortAttempts = 10
+
+function startServer(portToTry) {
+    const httpServer = server.listen(portToTry, () => {
+        console.log(`Servidor rodando na porta ${portToTry}`)
+    })
+
+    httpServer.on("error", (err) => {
+        if (err.code === "EADDRINUSE") {
+            const nextPort = portToTry + 1
+            if (nextPort <= port + maxPortAttempts) {
+                console.log(`Porta ${portToTry} ocupada. Tentando ${nextPort}...`)
+                startServer(nextPort)
+            } else {
+                console.error(`Não foi possível iniciar o servidor. Todas as portas entre ${port} e ${port + maxPortAttempts} estão ocupadas.`)
+                process.exit(1)
+            }
+        } else {
+            console.error(err)
+            process.exit(1)
+        }
+    })
+}
+
+startServer(port)
 
