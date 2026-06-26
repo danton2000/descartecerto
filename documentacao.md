@@ -22,20 +22,6 @@ O projeto se baseia em dados de discovery que revelam:
 * dificuldade de encontrar locais que aceitam itens específicos;
 * ausência de um repositório simples e gratuito para pequenos geradores de resíduos.
 
-A pesquisa de projetos correlatos indica soluções de mapas de coleta e guias de recicláveis, mas poucos oferecem cadastro colaborativo e busca por município em uma interface leve e de fácil uso.
-
-### Pesquisa e comparação
-
-| Característica | DescarteCerto | Aplicativos de mapas genéricos | Sites institucionais de reciclagem |
-| --- | --- | --- | --- |
-| Cadastro colaborativo | Sim | Não | Não |
-| Busca por cidade | Sim | Sim, mas geral | Limitado |
-| Classificação de itens recicláveis | Sim | Parcial | Parcial |
-| Interface leve | Sim | Geralmente pesada | Simples |
-| Uso offline parcial | Não | Não | Não |
-
-Este comparativo mostra o diferencial do DescarteCerto em oferecer uma experiência de cadastro e busca focada em pontos de coleta de resíduos recicláveis.
-
 ## Objetivos
 
 ### Objetivo Geral
