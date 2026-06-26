@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # Documentação do Projeto Final
-=======
 # Documentando um Projeto Final de ADS/SPI/CD
->>>>>>> ac07923 (subindo nova doc)
 
 _Danton Rodrigues_
 
@@ -26,7 +23,6 @@ O projeto se baseia em dados de discovery que revelam:
 
 ### Objetivo Geral
 
-<<<<<<< HEAD
 * **Estrutura do sistema**:
   - O backend gerencia as rotas e a comunicação com o banco de dados.
   - O frontend exibe as páginas dinâmicas utilizando Nunjucks.
@@ -34,7 +30,6 @@ O projeto se baseia em dados de discovery que revelam:
   - O usuário interage com o frontend.
   - O backend processa as requisições e acessa o banco de dados.
   - O banco de dados retorna as informações necessárias ao backend, que as envia ao frontend.
-=======
 Facilitar o acesso da população a informações sobre pontos de coleta de resíduos recicláveis, promovendo o descarte correto e contribuindo para a sustentabilidade.
 
 ### Objetivos Específicos
@@ -144,4 +139,3 @@ Perspectivas futuras:
 * Express.js Guide. https://expressjs.com/
 * Nunjucks documentation. https://mozilla.github.io/nunjucks/
 * SQLite Documentation. https://www.sqlite.org/docs.html
->>>>>>> ac07923 (subindo nova doc)
