@@ -1,4 +1,4 @@
-# Documentação Parcial do Projeto Final
+# Documentação do Projeto Final
 
 ## 1. Capa
 
