@@ -189,6 +189,8 @@ function showDistances() {
             pointLongitude
         )
 
+        card.dataset.distance = distance
+
         if (distance < 1) {
             distanceElement.textContent =
                 `📍 ${Math.round(distance * 1000)} m de distância`
@@ -203,6 +205,62 @@ function showDistances() {
         }
             
     }
+
+    sortCardsByDistance()
+}
+
+function sortCardsByDistance() {
+
+    const cardsContainer =
+        document.querySelector(".cards")
+
+    if (!cardsContainer) return
+
+    const cards =
+        [...cardsContainer.querySelectorAll(".card")]
+
+    cards.sort((firstCard, secondCard) => {
+
+        const firstDistance =
+            Number(firstCard.dataset.distance)
+
+        const secondDistance =
+            Number(secondCard.dataset.distance)
+
+        return firstDistance - secondDistance
+    })
+
+    // Reorganiza os cards na tela
+    cards.forEach(card => {
+        cardsContainer.appendChild(card)
+    })
+
+    // ============================
+    // Marca o ponto mais próximo
+    // ============================
+
+    // Remove selos antigos
+    document
+        .querySelectorAll(".nearest-badge")
+        .forEach(badge => badge.remove())
+
+    const firstCard =
+        cardsContainer.querySelector(".card")
+
+    if (firstCard) {
+
+        const badge = document.createElement("div")
+
+        badge.className = "nearest-badge"
+
+        badge.textContent = "⭐ Mais próximo"
+
+        const image = firstCard.querySelector("img")
+
+        if (image) {
+            image.insertAdjacentElement("afterend", badge)
+        }
+            }
 }
 
 showDistances()
