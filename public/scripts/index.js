@@ -66,7 +66,9 @@ async function getLocation(position) {
         }
 
         window.location.href =
-            `/search?search=${encodeURIComponent(city)}`
+            `/search?search=${encodeURIComponent(city)}` +
+            `&lat=${encodeURIComponent(lat)}` +
+            `&lon=${encodeURIComponent(lon)}`
 
     } catch (error) {
         console.error(error)

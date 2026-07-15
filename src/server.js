@@ -86,29 +86,50 @@ server.post("/save-point", (req, res) => {//rota para salvar o ponto de coleta
 
 })
 
-server.get("/search", (req, res) => {//get verbo http, jeito de conversa com o http(pedido)
-
+server.get("/search", (req, res) => {
     const search = req.query.search
 
-    if(search == ""){
-        //Pesquisa vazia
-        //mostrar a pagina html com os dados do banco de dados
-        return res.render("search-results.html", { total: 0 })//Renderizando os arquivos html
+    const userLatitude = Number(req.query.lat)
+    const userLongitude = Number(req.query.lon)
+
+    const hasUserLocation =
+        Number.isFinite(userLatitude) &&
+        Number.isFinite(userLongitude)
+
+    if (!search) {
+        return res.render("search-results.html", {
+            total: 0,
+            userLatitude: null,
+            userLongitude: null
+        })
     }
 
-    //pegar os dados do banco de dados, % qualquer cosia antes e depois
-    db.all(`SELECT * FROM places WHERE city LIKE '%${search}%'`, function (err, rows) {//rows = registro(1)
+    const query = `
+        SELECT *
+        FROM places
+        WHERE city LIKE ?
+    `
+
+    db.all(query, [`%${search}%`], function (err, rows) {
         if (err) {
-            return console.log(err)
+            console.error(err)
+
+            return res.status(500).send(
+                "Erro ao buscar pontos de coleta."
+            )
         }
 
-        // console.log(rows)
+        return res.render("search-results.html", {
+            places: rows,
+            total: rows.length,
 
-        const total = rows.length//vai contanr quantos elementos tem no array, rows?
+            userLatitude:
+                hasUserLocation ? userLatitude : null,
 
-        return res.render("search-results.html", { places: rows, total: total })
+            userLongitude:
+                hasUserLocation ? userLongitude : null
+        })
     })
-
 })
 
 //ligar o servidor
