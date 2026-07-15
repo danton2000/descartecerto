@@ -27,22 +27,48 @@
             </h4>
 
             <div class="cards">
-                {# estrutura de repetição do Nunjucks #}
-                {% for place in places %}
-                    {#  iterator = array, places = dados do banco #}
+            {% for place in places %}
 
-                    <div class="card">
-                        <img src="{{ place.image }}" alt="{{ place.image }}">
-                        <h1>{{ place.name }}</h1>
-                        <h3>{{ place.items }}</h3>
-                        <p>
-                            {{ place.address }}
-                            <br>
-                            {{ place.address2 }}
-                        </p>
-                    </div>
+               <div
+                class="card"
+                data-latitude="{{ place.latitude }}"
+                data-longitude="{{ place.longitude }}"
+                >
+                    <img src="{{ place.image }}" alt="{{ place.name }}">
 
-                {% endfor %}
+                    <h1>{{ place.name }}</h1>
+
+                    <p class="distance">
+                        Calculando distância...
+                    </p>
+
+                    <h3>{{ place.items }}</h3>
+
+                    <p>
+                        {{ place.address }}
+
+                        {% if place.address2 %}
+                            , {{ place.address2 }}
+                        {% endif %}
+                    </p>
+
+                    <button
+                        type="button"
+                        class="details-button"
+                        data-name="{{ place.name }}"
+                        data-city="{{ place.city }}"
+                        data-state="{{ place.state }}"
+                        data-address="{{ place.address }}"
+                        data-number="{{ place.address2 }}"
+                        data-items="{{ place.items }}"
+                        data-latitude="{{ place.latitude }}"
+                        data-longitude="{{ place.longitude }}"
+                    >
+                        Ver mais detalhes
+                    </button>
+                </div>
+
+            {% endfor %}
             </div>
             
         {% else %}
@@ -52,5 +78,61 @@
             </div>
         {% endif %}
 
+        <div id="details-modal" class="details-modal hide">
+            <div class="details-content">
+
+                <button
+                    type="button"
+                    id="close-details"
+                    class="close-details"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+
+                <h2 id="details-name"></h2>
+
+                <div class="details-info">
+                    <p>
+                        <strong>Cidade:</strong>
+                        <span id="details-city"></span>
+                    </p>
+
+                    <p>
+                        <strong>Estado:</strong>
+                        <span id="details-state"></span>
+                    </p>
+
+                    <p>
+                        <strong>Endereço:</strong>
+                        <span id="details-address"></span>
+                    </p>
+
+                    <p>
+                        <strong>Número:</strong>
+                        <span id="details-number"></span>
+                    </p>
+
+                    <p>
+                        <strong>Materiais aceitos:</strong>
+                        <span id="details-items"></span>
+                    </p>
+                </div>
+
+                <div id="details-map"></div>
+            </div>
+        </div>
+
     </main>
 {% endblock content %}
+
+<script>
+    window.userLocation = {
+        latitude: {{ userLatitude or "null" }},
+        longitude: {{ userLongitude or "null" }}
+    }
+</script>
+
+{% block scripts %}
+    <script src="/scripts/search-results.js"></script>
+{% endblock scripts %}
