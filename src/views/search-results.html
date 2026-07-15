@@ -29,22 +29,20 @@
             <div class="cards">
             {% for place in places %}
 
-            <div
-                class="card"
-                data-latitude="{{ place.latitude }}"
-                data-longitude="{{ place.longitude }}"
-            >
+                <div
+                    class="card"
+                    data-latitude="{{ place.latitude }}"
+                    data-longitude="{{ place.longitude }}"
+                >
                     <img src="{{ place.image }}" alt="{{ place.name }}">
 
                     <h1>{{ place.name }}</h1>
 
-                    <p class="distance">
-                        {% if userLatitude != null and userLongitude != null %}
+                    {% if userLatitude != null and userLongitude != null %}
+                        <p class="distance">
                             Calculando distância...
-                        {% else %}
-                            Distância disponível ao usar sua localização
-                        {% endif %}
-                    </p>
+                        </p>
+                    {% endif %}
 
                     <h3>{{ place.items }}</h3>
 

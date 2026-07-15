@@ -146,24 +146,19 @@ function calculateDistance(
 function showDistances() {
     const userLocation = window.userLocation || {}
 
-    const userLatitude =
-        Number(userLocation.latitude)
-
-    const userLongitude =
-        Number(userLocation.longitude)
-
-    const hasUserLocation =
-        userLocation.latitude !== null &&
-        userLocation.longitude !== null &&
-        Number.isFinite(userLatitude) &&
-        Number.isFinite(userLongitude)
-
-    const cards =
-        document.querySelectorAll(".card")
-
-    if (!hasUserLocation) {
+    if (
+        userLocation.latitude === null ||
+        userLocation.longitude === null ||
+        userLocation.latitude === undefined ||
+        userLocation.longitude === undefined
+    ) {
         return
     }
+
+    const userLatitude = Number(userLocation.latitude)
+    const userLongitude = Number(userLocation.longitude)
+
+    const cards = document.querySelectorAll(".card")
 
     for (const card of cards) {
         const distanceElement =
@@ -173,28 +168,17 @@ function showDistances() {
             continue
         }
 
-        const latitudeValue =
-            card.dataset.latitude
-
-        const longitudeValue =
-            card.dataset.longitude
-
         const pointLatitude =
-            Number(latitudeValue)
+            Number(card.dataset.latitude)
 
         const pointLongitude =
-            Number(longitudeValue)
+            Number(card.dataset.longitude)
 
-        const hasPointLocation =
-            latitudeValue !== "" &&
-            longitudeValue !== "" &&
-            Number.isFinite(pointLatitude) &&
-            Number.isFinite(pointLongitude)
-
-        if (!hasPointLocation) {
-            distanceElement.textContent =
-                "Distância não disponível"
-
+        if (
+            !Number.isFinite(pointLatitude) ||
+            !Number.isFinite(pointLongitude)
+        ) {
+            distanceElement.remove()
             continue
         }
 
@@ -206,15 +190,18 @@ function showDistances() {
         )
 
         if (distance < 1) {
-            const meters =
-                Math.round(distance * 1000)
-
             distanceElement.textContent =
-                `📍 ${meters} m de distância`
-        } else {
+                `📍 ${Math.round(distance * 1000)} m de distância`
+        }
+        else if (distance < 10) {
             distanceElement.textContent =
                 `📍 ${distance.toFixed(1)} km de distância`
         }
+        else {
+            distanceElement.textContent =
+                `📍 ${Math.round(distance)} km de distância`
+        }
+            
     }
 }
 
