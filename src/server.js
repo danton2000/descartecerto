@@ -50,8 +50,10 @@ server.post("/save-point", (req, res) => {//rota para salvar o ponto de coleta
             address2,
             state,
             city,
-            items
-        ) VALUES (?,?,?,?,?,?,?); 
+            items,
+            latitude,
+            longitude
+        ) VALUES (?,?,?,?,?,?,?,?,?); 
         `
 
     const values = [//objeto contendo as propriedades necessarias
@@ -61,7 +63,9 @@ server.post("/save-point", (req, res) => {//rota para salvar o ponto de coleta
         req.body.address2,
         req.body.state,
         req.body.city,
-        req.body.items
+        req.body.items,
+        req.body.latitude,
+        req.body.longitude
     ]
 
     function afterInsertData(err) {

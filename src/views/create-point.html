@@ -19,38 +19,38 @@
     <form action="/save-point" method="POST">
         <h1>Cadastro do ponto de coleta</h1>
         <fieldset>
-            <!-- AGRUPAR AS PARTES -->
             <legend>
-                <h2>Dados da entidade</h2>
+                <h2>Dados do ponto de coleta</h2>
             </legend>
 
             <div class="field-group">
                 <div class="field">
-                    <label for="name">Nome da entidade</label>
-                    <input type="text" name="name" required="required">
+                    <label for="name">Nome do ponto</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                    >
                 </div>
+
                 <div class="field">
-                    <label for="name">Imagem da entidade</label>
-                    <input type="url" name="image" placeholder="http://" required="required">
+                    <label for="image">Imagem do ponto</label>
+                    <input
+                        type="url"
+                        id="image"
+                        name="image"
+                        placeholder="https://..."
+                        required
+                    >
                 </div>
             </div>
 
             <div class="field-group">
                 <div class="field">
-                    <label for="address">Endereço</label>
-                    <input type="text" name="address" required="required">
-                </div>
+                    <label for="uf">Estado</label>
 
-                <div class="field">
-                    <label for="address2">Número/Complemento</label>
-                    <input type="text" name="address2" required="required">
-                </div>
-            </div>
-
-            <div class="field-group">
-                <div class="field">
-                    <label for="state">Estado</label>
-                    <select name="uf" required="required">
+                    <select id="uf" name="uf" required>
                         <option value="">Selecione o Estado</option>
                     </select>
 
@@ -59,11 +59,49 @@
 
                 <div class="field">
                     <label for="city">Cidade</label>
-                    <select name="city" disabled="disabled" required="required">
+
+                    <select id="city" name="city" disabled required>
                         <option value="">Selecione a Cidade</option>
                     </select>
                 </div>
             </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                <h2>Localização</h2>
+                <span>Selecione no mapa onde fica o ponto</span>
+            </legend>
+
+            <div id="map"></div>
+
+            <div class="field-group">
+                <div class="field">
+                    <label for="address-preview">Endereço encontrado</label>
+
+                    <input
+                        type="text"
+                        id="address-preview"
+                        placeholder="Selecione uma localização no mapa"
+                        readonly
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="address2">Número</label>
+
+                    <input
+                        type="text"
+                        id="address2"
+                        name="address2"
+                        placeholder="Número"
+                    >
+                </div>
+            </div>
+
+            <input type="hidden" name="address">
+            <input type="hidden" name="latitude">
+            <input type="hidden" name="longitude">
         </fieldset>
 
         <fieldset>

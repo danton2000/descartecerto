@@ -24,7 +24,7 @@
         grid-template-columns: 1fr;
     }
 
-    #page-search-results cards img{
+    #page-search-results .cards img{
         height: 250px;
     }
 

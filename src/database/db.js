@@ -103,7 +103,9 @@ try {
                 address2 TEXT,
                 state TEXT,
                 city TEXT,
-                items TEXT
+                items TEXT,
+                latitude REAL,
+                longitude REAL
             );
         `)
     })
