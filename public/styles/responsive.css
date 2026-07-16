@@ -11,7 +11,7 @@
 
     #page-home header a{
         position: absolute;
-        bottom: 48px;
+        /* bottom: 48px; */
         left: 50%;
         transform: translateX(-50%);
     }
@@ -22,6 +22,14 @@
 
     #page-search-results .cards{
         grid-template-columns: 1fr;
+    }
+
+    .items-grid{
+        grid-template-columns: 1fr;
+    }
+
+    form legend span{
+        margin-left: 20px;
     }
 
     #page-search-results .cards img{
@@ -35,6 +43,10 @@
     #page-create-point .field-group .field + .field{
         margin-left: 0;
     }
+
+    form button{
+        width: 100%;
+    }
 }
 
 @media(min-width: 1700px){
@@ -46,5 +58,10 @@
 @media(max-height: 760px){
     #page-home{
         background-position-y: 200px;
+    }
+
+    #page-home main a{
+        margin-bottom: 40px;
+        max-width: 100%;
     }
 }
