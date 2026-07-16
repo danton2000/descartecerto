@@ -264,3 +264,45 @@ function sortCardsByDistance() {
 }
 
 showDistances()
+
+const materialFilter =
+    document.querySelector("#material-filter")
+
+if (materialFilter) {
+
+    materialFilter.addEventListener(
+        "change",
+        filterByMaterial
+    )
+
+}
+
+function filterByMaterial() {
+
+    const selectedMaterial =
+        materialFilter.value.toLowerCase()
+
+    const cards =
+        document.querySelectorAll(".card")
+
+    cards.forEach(card => {
+
+        const items =
+            card.dataset.items.toLowerCase()
+
+        if (
+            selectedMaterial === "" ||
+            items.includes(selectedMaterial)
+        ) {
+
+            card.style.display = ""
+
+        } else {
+
+            card.style.display = "none"
+
+        }
+
+    })
+
+}

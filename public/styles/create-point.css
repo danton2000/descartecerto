@@ -176,6 +176,6 @@ form button:hover{
     height:350px;
     border-radius:16px;
     overflow:hidden;
-    margin-top:20px;
+    margin-bottom: 24px;
     border:1px solid var(--border);
 }

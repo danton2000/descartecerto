@@ -227,3 +227,43 @@ main .card .distance {
 
     font-weight: 700;
 }
+
+.filters{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin:24px 0 32px;
+
+}
+
+.filters label{
+
+    font-weight:600;
+
+    color:var(--title-color);
+
+}
+
+.filters select{
+
+    width:260px;
+
+    height:46px;
+
+    padding:0 16px;
+
+    border-radius:12px;
+
+    border:1px solid #D1D5DB;
+
+    background:#fff;
+
+    color:var(--title-color);
+
+    font-size:16px;
+
+}

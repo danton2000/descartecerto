@@ -26,11 +26,48 @@
                 encontrados
             </h4>
 
+            <div class="filters">
+
+                <label for="material-filter">
+                    Filtrar por material
+                </label>
+
+                <select id="material-filter">
+
+                    <option value="">
+                        Todos os materiais
+                    </option>
+
+                    <option value="Pilhas e Baterias">
+                        Pilhas e Baterias
+                    </option>
+
+                    <option value="Papéis e Papelão">
+                        Papéis e Papelão
+                    </option>
+
+                    <option value="Lâmpadas">
+                        Lâmpadas
+                    </option>
+
+                    <option value="Óleo de Cozinha">
+                        Óleo de Cozinha
+                    </option>
+
+                    <option value="Resíduos Eletrônicos">
+                        Resíduos Eletrônicos
+                    </option>
+
+                </select>
+
+            </div>
+
             <div class="cards">
             {% for place in places %}
 
                 <div
                     class="card"
+                    data-items="{{ place.items }}"
                     data-latitude="{{ place.latitude }}"
                     data-longitude="{{ place.longitude }}"
                 >
