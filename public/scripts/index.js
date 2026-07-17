@@ -3,6 +3,7 @@ const modal = document.querySelector("#modal")
 const close = document.querySelector("#modal .header a")
 const locationButton = document.querySelector("#find-location")
 
+// Abre o modal da página inicial ao clicar no botão de busca.
 buttonSearch.addEventListener("click", event => {
     event.preventDefault()
     modal.classList.remove("hide")
@@ -14,6 +15,7 @@ close.addEventListener("click", event => {
 })
 
 if (locationButton) {
+    // Usa a geolocalização do navegador para descobrir a cidade do usuário.
     locationButton.addEventListener("click", event => {
         event.preventDefault()
 

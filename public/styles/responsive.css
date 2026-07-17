@@ -1,4 +1,4 @@
-/*CONJUNTO DE REGRAS*/
+/* Regras de responsividade para telas menores. */
 @media(max-width: 900px){
     #page-home{
         background-position-x: 70vw;

@@ -2,6 +2,7 @@ const detailsModal = document.querySelector("#details-modal")
 const closeDetailsButton = document.querySelector("#close-details")
 const detailsButtons = document.querySelectorAll(".details-button")
 
+// Campos do modal de detalhes do ponto de coleta.
 const detailsName = document.querySelector("#details-name")
 const detailsCity = document.querySelector("#details-city")
 const detailsState = document.querySelector("#details-state")
@@ -13,6 +14,7 @@ let detailsMap = null
 let detailsMarker = null
 
 for (const button of detailsButtons) {
+    // Preenche o modal com os dados do ponto selecionado.
     button.addEventListener("click", function () {
         const name = button.dataset.name
         const city = button.dataset.city
@@ -105,6 +107,7 @@ document.addEventListener("keydown", function (event) {
     }
 })
 
+// Calcula a distância em quilômetros entre duas coordenadas geográficas.
 function calculateDistance(
     latitude1,
     longitude1,
@@ -209,6 +212,7 @@ function showDistances() {
     sortCardsByDistance()
 }
 
+// Reordena os cards de acordo com a distância até a localização do usuário.
 function sortCardsByDistance() {
 
     const cardsContainer =

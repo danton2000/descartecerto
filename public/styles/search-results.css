@@ -1,3 +1,4 @@
+/* Estilos da página de resultados da busca. */
 body{
     background-color: transparent;
 }
@@ -67,7 +68,7 @@ main .card img{
 
 main .card h1{
     margin-top: 32px;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 41px;
     color: #322153;
 }

@@ -1,6 +1,8 @@
+// Conecta ao banco SQLite e mantém um fallback em memória caso a dependência não esteja disponível.
 const path = require("path")
 const dbPath = path.join(__dirname, "database.db")
 
+// Simula um banco mínimo para manter a aplicação funcionando sem o SQLite.
 function createFallbackDatabase() {
     const state = {
         places: []
@@ -89,6 +91,7 @@ function createFallbackDatabase() {
 
 let db
 
+// Tenta abrir o SQLite real; se falhar, usa o fallback em memória.
 try {
     const sqlite3 = require("sqlite3").verbose()
     db = new sqlite3.Database(dbPath)

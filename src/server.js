@@ -86,6 +86,7 @@ server.post("/save-point", (req, res) => {//rota para salvar o ponto de coleta
 
 })
 
+// Busca os pontos de coleta pelo nome da cidade informada.
 server.get("/search", (req, res) => {
     const search = req.query.search
 
@@ -132,8 +133,7 @@ server.get("/search", (req, res) => {
     })
 })
 
-//ligar o servidor
-//npm start
+// Inicia o servidor e tenta a próxima porta caso a atual esteja ocupada.
 const port = Number(process.env.PORT || 3000)
 const maxPortAttempts = 10
 

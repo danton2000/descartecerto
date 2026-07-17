@@ -1,63 +1,89 @@
 # Levantamento de Requisitos - DescarteCerto
 
 ## Visão Geral
-Plataforma web para conectar pessoas a pontos de coleta de resíduos recicláveis.
+O DescarteCerto é uma aplicação web para auxiliar pessoas a localizar pontos de coleta de resíduos recicláveis, com foco em usabilidade, rapidez e cadastro de locais por cidade.
+
+## Objetivo do Sistema
+Facilitar a identificação de pontos de coleta com base em cidade, materiais aceitos e proximidade geográfica, promovendo o descarte correto de resíduos.
 
 ## Requisitos Funcionais
 
 ### RF-01: Página Inicial
-- Exibir hero section com logo e descrição do projeto
-- Botão "Pesquisar pontos de coleta" que abre modal de busca
-- Modal com campo de busca por cidade
+- Exibir uma landing page com identidade visual do projeto.
+- Possibilitar acesso ao cadastro de ponto de coleta.
+- Permitir busca por cidade por meio de modal.
+- Oferecer botão para utilizar a localização atual do usuário.
 
 ### RF-02: Cadastro de Ponto de Coleta
-- Formulário com os seguintes campos:
-  - Imagem (URL)
-  - Nome do ponto
-  - Endereço (rua, número)
-  - UF (estado) - carregado dinamicamente via API IBGE
-  - Cidade - carregado conforme UF selecionado
-  - Items de coleta (seleção múltipla)
-- Validar preenchimento dos campos obrigatórios
-- Feedback visual ao selecionar itens
+- Formulário com os campos:
+  - nome do ponto;
+  - imagem (URL);
+  - estado;
+  - cidade;
+  - endereço e número;
+  - latitude e longitude;
+  - materiais aceitos.
+- Carregar estados e cidades dinamicamente via API do IBGE.
+- Permitir seleção da localização diretamente no mapa.
+- Exibir endereço identificado automaticamente pelo OpenStreetMap/Nominatim.
+- Validar campos obrigatórios antes do envio.
+- Permitir seleção múltipla de itens de coleta.
 
 ### RF-03: Busca de Pontos
-- Pesquisar pontos de coleta por nome da cidade
-- Exibir resultados em página dedicada
-- Mostrar total de resultados encontrados
-- Validar busca vazia
+- Buscar pontos por cidade informada pelo usuário.
+- Exibir uma página com os resultados encontrados.
+- Mostrar o total de pontos retornados.
+- Exibir cards com nome, materiais, endereço e distância aproximada quando houver localização do usuário.
+- Permitir filtro por material na página de resultados.
+- Exibir modal com detalhes do ponto selecionado.
 
-### RF-04: Persistência de Dados
-- Salvar novos pontos de coleta no banco de dados
-- Recuperar pontos para exibição em buscas
-- Mensagem de sucesso/erro após cadastro
+### RF-04: Detalhamento do Local
+- Ao clicar em "Ver mais detalhes", abrir um modal com:
+  - cidade;
+  - estado;
+  - endereço;
+  - número;
+  - materiais aceitos;
+  - mapa com marcador do ponto.
+
+### RF-05: Persistência de Dados
+- Salvar novos pontos de coleta no banco SQLite.
+- Recuperar registros para busca por cidade.
+- Exibir feedback de sucesso ou erro após o cadastro.
+- Usar fallback em memória caso o SQLite não esteja disponível.
 
 ## Requisitos Não-Funcionais
 
-### Tecnologia
-- Backend: Node.js com Express
-- Frontend: HTML5, CSS3, JavaScript Vanilla
-- Template Engine: Nunjucks
-- Banco de Dados: SQLite3
-- API externa: IBGE (localidades)
-
-### Performance
-- Carregamento da página inicial < 2s
-- Busca dinâmica sem reload de página
-- Auto-preenchimento de cidades sem delay perceptível
+### Tecnológicos
+- Backend: Node.js com Express.
+- Frontend: HTML5, CSS3 e JavaScript Vanilla.
+- Template engine: Nunjucks.
+- Banco de dados: SQLite3.
+- Integrações externas: API do IBGE e Nominatim/OpenStreetMap.
 
 ### Usabilidade
-- Design responsivo (mobile, tablet, desktop)
-- Modal para busca intuitiva
-- Feedback visual ao interagir (botões, seleções)
-- Mensagens de erro/sucesso claras
+- Interface responsiva para desktop e mobile.
+- Modal intuitivo para busca por cidade.
+- Feedback visual ao selecionar itens e ao interagir com o mapa.
+- Mensagens claras para localização, busca e cadastro.
+
+### Performance
+- Carregamento leve da interface principal.
+- Busca rápida por cidade no backend.
+- Atualização de listas e ordenação de resultados sem necessidade de nova página.
 
 ## Fluxo Principal
 
-1. Usuário acessa `/` (homepage)
-2. Clica em "Pesquisar pontos" ou "Cadastre um ponto"
-3. **Se busca:** Preenche cidade → vê resultados
-4. **Se cadastro:** Preenche formulário → dados salvos → confirmação
+1. O usuário acessa a página inicial.
+2. Pode buscar por cidade diretamente no modal ou usar a localização atual.
+3. Se a busca for realizada, o sistema redireciona para página de resultados.
+4. O usuário pode filtrar por material, ver a distância e abrir detalhes do ponto.
+5. Se for cadastro, o usuário preenche o formulário, seleciona o ponto no mapa e salva os dados.
+6. O sistema persiste os dados e retorna confirmação de cadastro.
 
 ## Integrações Externas
-- **API IBGE**: Endpoints para listar estados e municípios brasileiros
+- API do IBGE: consulta de estados e municípios brasileiros.
+- API do Nominatim/OpenStreetMap: geocodificação reversa e busca de cidade/endereços.
+
+## Status Atual
+O projeto já contempla as principais funcionalidades de cadastro, pesquisa, detalhe de pontos e geolocalização do usuário, com layout responsivo e integração com mapas e APIs externas.

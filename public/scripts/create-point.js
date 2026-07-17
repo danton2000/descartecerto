@@ -2,8 +2,10 @@
 // MAPA
 // ==========================================
 
+// Inicializa o mapa principal da página de cadastro.
 const map = L.map("map").setView([-14.235, -51.9253], 4)
 
+// Carrega os tiles do OpenStreetMap para exibir o mapa.
 L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
@@ -287,9 +289,11 @@ map.on("click", async function (event) {
 // ITENS DE COLETA
 // ==========================================
 
+// Lista de itens clicáveis para seleção no formulário.
 const itemsToCollect =
     document.querySelectorAll(".items-grid li")
 
+// Campo oculto que recebe os itens escolhidos no formato de texto.
 const collectedItems =
     document.querySelector("input[name=items]")
 
@@ -328,6 +332,7 @@ function handleSelectedItem(event) {
 
 const form = document.querySelector("form")
 
+// Bloqueia o envio se a localização ou os itens não forem informados.
 form.addEventListener("submit", function (event) {
     if (!latitudeInput.value || !longitudeInput.value) {
         event.preventDefault()

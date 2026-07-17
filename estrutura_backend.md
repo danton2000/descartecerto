@@ -1,43 +1,90 @@
 # Estrutura do Backend - DescarteCerto
 
-## Arquivos Principais
+## Visão Geral
+O backend do DescarteCerto é responsável por receber requisições HTTP, renderizar páginas com Nunjucks, acessar o banco de dados e fornecer a comunicação entre frontend e persistência.
+
+## Estrutura de Pastas
 
 src/
-├── server.js # Servidor Express e rotas
+├── server.js              # Configuração do Express, rotas e inicialização do servidor
 └── database/
-└── db.js # Conexão SQLite3
+    └── db.js              # Conexão com SQLite3 e fallback em memória
 
-## server.js
+public/
+├── scripts/               # Lógica interativa do frontend
+└── styles/                # Estilos da aplicação
 
-**O que faz:** Configura o Express, define rotas e conecta com o banco de dados.
+src/views/
+├── index.html             # Página inicial
+├── create-point.html      # Formulário de cadastro
+├── search-results.html    # Página de resultados
+└── partials/              # Componentes reaproveitáveis do layout
 
-**Rotas:**
-- `GET /` → Página inicial
-- `GET /create-point` → Formulário de cadastro
-- `POST /save-point` → Salva novo ponto no BD
-- `GET /search` → Busca pontos por cidade
+## Componente server.js
 
-**Fluxo:**
-1. Recebe requisição do usuário
-2. Processa dados (formulário ou query)
-3. Executa operação no banco de dados
-4. Renderiza página HTML com resultado
+### Funções principais
+- Configura o Express.
+- Define a pasta pública de assets estáticos.
+- Habilita `req.body` no formato `urlencoded`.
+- Configura o Nunjucks para renderizar as views.
+- Cria as rotas da aplicação.
+- Inicializa o servidor na porta configurada.
 
-## database/db.js
+### Rotas implementadas
 
-**O que faz:** Configura e exporta a conexão com SQLite3.
+- `GET /` → renderiza a página inicial.
+- `GET /create-point` → renderiza o formulário de cadastro.
+- `POST /save-point` → recebe os dados do formulário e salva no banco.
+- `GET /search` → busca pontos por cidade e renderiza a página de resultados.
 
-**Banco de dados:** `database.db`
+### Fluxo de execução
+1. A requisição chega ao Express.
+2. A rota correspondente processa os parâmetros.
+3. O backend consulta o banco SQLite.
+4. A resposta é renderizada em HTML por Nunjucks.
 
-**Tabela principal:** `places`
+## Componente database/db.js
 
-## Stack Tecnológico
+### Funções principais
+- Define o caminho do arquivo `database.db`.
+- Cria a tabela `places` caso ela não exista.
+- Exporta a conexão para uso no servidor.
+- Possui fallback em memória quando o SQLite não está disponível.
 
-- **Node.js** - Runtime
-- **Express** - Framework web
-- **Nunjucks** - Template engine (renderiza HTML)
-- **SQLite3** - Banco de dados
+### Tabela principal
+- `places`
+  - `id`
+  - `image`
+  - `name`
+  - `address`
+  - `address2`
+  - `state`
+  - `city`
+  - `items`
+  - `latitude`
+  - `longitude`
 
-## Porta
+## Fluxo de Persistência
 
-Servidor rodando em: **localhost:3000**
+- O formulário de cadastro envia os dados para `POST /save-point`.
+- O servidor monta uma query `INSERT INTO places ...`.
+- O banco grava o registro.
+- A view de cadastro é renderizada novamente com confirmação.
+
+## Stack Tecnológica
+
+- Node.js
+- Express
+- Nunjucks
+- SQLite3
+- HTML, CSS e JavaScript Vanilla
+
+## Observações da Implementação
+
+- O servidor tenta iniciar em `PORT` ou em `3000`.
+- Se a porta estiver ocupada, tenta a próxima disponível.
+- A aplicação suporta operação local com persistência em arquivo e fallback em memória para ambiente sem `sqlite3`.
+
+## Porta de Execução
+
+- localhost:3000

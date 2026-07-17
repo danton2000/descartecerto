@@ -7,135 +7,104 @@ Este documento apresenta a documentação do projeto final DescarteCerto, desenv
 
 ## Resumo do Projeto
 
-O DescarteCerto é uma plataforma web que resolve a dificuldade dos cidadãos em encontrar pontos de coleta para resíduos recicláveis nas cidades brasileiras. O problema é relevante porque o descarte incorreto gera poluição, sobrecarrega aterros e reduz a reciclagem de materiais úteis. A solução oferece cadastro de pontos de coleta, busca por cidade e visualização dos locais cadastrados, com um fluxo simples e responsivo. Como consequência, espera-se incentivar a destinação correta de resíduos e apoiar a promoção de hábitos ambientais mais sustentáveis.
+O DescarteCerto é uma plataforma web voltada para conectar cidadãos a pontos de coleta de resíduos recicláveis. A solução oferece cadastro, pesquisa por cidade, visualização de detalhes e ordenação por proximidade geográfica, utilizando mapas interativos e integração com APIs públicas.
 
 ## Definição do Problema
 
-A falta de informação sobre locais de coleta de recicláveis é um problema prático para a população urbana. Muitos usuários não têm acesso a um canal confiável que reúna pontos de descarte adequados, o que leva ao descarte indevido de materiais como eletrônicos, óleo de cozinha, pilhas e papéis.
+A falta de informação sobre pontos de coleta de resíduos é um problema real para a população. Muitas pessoas não encontram locais confiáveis para descarte adequado, principalmente quando precisam saber quais materiais são aceitos e como chegar ao ponto mais próximo.
 
-O projeto se baseia em dados de discovery que revelam:
-
-* necessidade de transparência na localização de pontos de coleta;
-* dificuldade de encontrar locais que aceitam itens específicos;
-* ausência de um repositório simples e gratuito para pequenos geradores de resíduos.
+O projeto aborda essa lacuna com uma solução simples, leve e acessível, focada em facilitar o descarte correto e promover hábitos ambientais mais conscientes.
 
 ## Objetivos
 
 ### Objetivo Geral
 
-* **Estrutura do sistema**:
-  - O backend gerencia as rotas e a comunicação com o banco de dados.
-  - O frontend exibe as páginas dinâmicas utilizando Nunjucks.
-* **Fluxo entre frontend, backend e banco**:
-  - O usuário interage com o frontend.
-  - O backend processa as requisições e acessa o banco de dados.
-  - O banco de dados retorna as informações necessárias ao backend, que as envia ao frontend.
-Facilitar o acesso da população a informações sobre pontos de coleta de resíduos recicláveis, promovendo o descarte correto e contribuindo para a sustentabilidade.
+Promover o acesso a informações sobre pontos de coleta de resíduos recicláveis, apoiando a separação correta e o descarte responsável.
 
 ### Objetivos Específicos
 
-* Desenvolver uma interface web responsiva para cadastro e pesquisa de locais de coleta.
-* Integrar a aplicação com dados de estados e cidades do Brasil para tornar o cadastro mais preciso.
-* Permitir o registro de diferentes tipos de materiais recicláveis aceitos em cada ponto.
-* Armazenar as informações em banco de dados para recuperação rápida e segura.
-* Exibir resultados de busca com contagem de pontos encontrados e dados completos do local.
+- desenvolver uma interface web responsiva para cadastro e consulta de pontos de coleta;
+- integrar estados e cidades brasileiras a partir do IBGE;
+- permitir seleção de localização diretamente no mapa;
+- exibir resultados com materiais aceitos e distância até a localização do usuário;
+- armazenar os registros em banco de dados local.
 
-## Stack Tecnológico
+## Stack Tecnológica
 
-O projeto utiliza tecnologias modernas e apropriadas para um protótipo de aplicação web.
-
-* **HTML5** – marcação de páginas e formulários.
-* **CSS3** – estilos responsivos para desktop e mobile.
-* **JavaScript Vanilla** – interações no frontend, seleção de itens e preenchimento dinâmico de cidades.
-* **Node.js** – execução do servidor.
-* **Express** – framework web para roteamento e tratamento de requisições.
-* **Nunjucks** – engine de templates para renderização de páginas HTML.
-* **SQLite** – banco de dados leve e embarcado, adequado para protótipos e aplicações pequenas.
-* **Nodemon** – ferramenta de desenvolvimento para reiniciar o servidor automaticamente.
-
-### Justificativa das escolhas
-
-Node.js e Express foram escolhidos pela facilidade de criar um backend leve e escalável com poucos arquivos. Nunjucks permite separar a lógica do servidor das páginas HTML, deixando o frontend mais organizado. SQLite é ideal para este projeto porque não exige instalação de servidor adicional, facilitando a execução local e o desenvolvimento rápido.
+- HTML5
+- CSS3
+- JavaScript Vanilla
+- Node.js
+- Express
+- Nunjucks
+- SQLite3
+- Nodemon
+- APIs externas: IBGE e OpenStreetMap/Nominatim
 
 ## Descrição da Solução
 
-O DescarteCerto é organizado como uma aplicação web com três principais funcionalidades:
+A aplicação é organizada em páginas renderizadas pelo Nunjucks, com os assets estáticos localizados em `public/`. A homepage apresenta uma proposta visual do projeto e permite iniciar a busca por cidade. O formulário de cadastro usa um mapa interativo para capturar latitude e longitude, além de preencher automaticamente o endereço encontrado pela API de geocodificação.
 
-* cadastro de pontos de coleta;
-* busca de pontos por cidade;
-* exibição de resultados com detalhes do endereço e materiais aceitos.
-
-Ao acessar a página inicial, o usuário encontra informações sobre o projeto e dois caminhos principais: cadastrar um novo ponto de coleta ou buscar pontos existentes. O formulário de cadastro solicita nome, imagem, endereço, estado, cidade e itens coletados. Os estados e cidades são preenchidos dinamicamente no frontend usando dados do IBGE, tornando o cadastro mais preciso e reduzindo erros de digitação.
-
-O backend processa o formulário em `POST /save-point`, insere os dados na tabela `places` do banco SQLite e retorna a mesma página de cadastro com confirmação de sucesso. A busca é feita em `GET /search`, onde o parâmetro `search` filtra pontos pelo campo `city` usando uma consulta SQL com `LIKE`.
-
-As telas principais do sistema incluem:
-
-* homepage com modal de busca por cidade;
-* formulário `create-point.html` para cadastro de locais;
-* `search-results.html` para exibir os pontos encontrados.
-
-O design valoriza usabilidade, com feedback visual ao selecionar itens e mensagens claras de sucesso ou erro.
+A busca de pontos por cidade retorna uma página com cards contendo informações do ponto, materiais aceitos e distância calculada quando há localização do usuário. Também existe filtro por material e modal com detalhes do local.
 
 ## Arquitetura
 
-A arquitetura do DescarteCerto segue uma estrutura simples em camadas:
+A arquitetura segue o padrão de aplicação web simples em camadas:
 
-* **Apresentação** – páginas HTML renderizadas pelo Nunjucks em `src/views` e `public` para assets estáticos.
-* **Controle** – rotas definidas em `src/server.js` tratam requisições HTTP e coordenam os dados.
-* **Persistência** – `src/database/db.js` gerencia a conexão com o banco SQLite e a tabela `places`.
+- Apresentação: views em `src/views` e estilos em `public/styles`.
+- Controle: rotas definidas em `src/server.js`.
+- Persistência: conexão e acesso ao banco em `src/database/db.js`.
 
-Artefatos produzidos durante o desenvolvimento:
+## Fluxo de Funcionamento
 
-* levantamento de requisitos funcionais e não-funcionais;
-* estrutura técnica do backend;
-* fluxos de cadastro e busca do usuário;
-* protótipos de interface baseados em `create-point.html` e `search-results.html`;
+1. O usuário acessa a homepage.
+2. Pode buscar uma cidade ou usar a geolocalização do navegador.
+3. O backend consulta os pontos cadastrados e renderiza a página de resultados.
+4. Na página de resultados, o usuário pode filtrar por material e visualizar detalhes de cada ponto.
+5. O formulário de cadastro coleta dados do ponto e salva no banco SQLite.
 
-A comunicação entre as camadas é direta: o frontend envia requisições ao servidor Express, que executa operações SQL no SQLite e renderiza as páginas de resposta.
+## Funcionalidades Implementadas
+
+- busca por cidade;
+- cadastro de pontos de coleta;
+- seleção de localização no mapa;
+- geocodificação reversa para endereço;
+- modal de detalhes do ponto;
+- cálculo de distância entre o usuário e os pontos;
+- ordenação automática por proximidade;
+- interface responsiva;
+- fallback do banco em memória quando necessário.
 
 ## Validação
 
-### Estratégia
+A validação foi feita de forma manual, testando cenários reais de uso, como:
 
-A validação do sistema considerou três dimensões:
+- cadastro de novos pontos;
+- busca por cidade existente;
+- busca por cidade sem resultados;
+- uso da geolocalização;
+- filtro por material;
+- abertura do modal com detalhes.
 
-* funcionalidade – verificar cadastro de pontos e pesquisa por cidade;
-* usabilidade – confirmar se os formulários e resultados são claros e responsivos;
-* integridade dos dados – garantir que campos obrigatórios sejam preenchidos.
+## Limitações Observadas
 
-Testes manuais foram realizados usando cenários reais de uso: cadastro de pontos com diferentes tipos de resíduos, busca por cidades existentes e busca por cidades sem resultados.
+- o sistema ainda não possui autenticação de usuários;
+- não é possível editar ou excluir registros diretamente pela interface;
+- há apenas validação básica de campos obrigatórios;
 
-### Consolidação dos Dados Coletados
+## Perspectivas Futuras
 
-Os resultados de validação mostraram que:
-
-* o cadastro salva os dados corretamente no banco;
-* a busca retorna os pontos de coleta quando a cidade existe;
-* a interface trata o caso de pesquisa vazia exibindo `0 pontos encontrados`.
-
-A análise indicou que a solução atende aos objetivos básicos do projeto, mesmo sendo um protótipo técnico com potencial para melhorias.
-
-## Conclusões
-
-O DescarteCerto alcançou o objetivo de oferecer uma solução prática para localizar pontos de coleta de reciclagem. A aplicação demonstra como uma plataforma leve pode apoiar o descarte correto de resíduos e aumentar a conscientização ambiental.
-
-Limitações observadas:
-
-* o sistema não possui autenticação de usuários;
-* o cadastro de pontos não valida itens duplicados nem geolocalização;
-* a arquitetura ainda não é preparada para alta escala.
-
-Perspectivas futuras:
-
-* incluir login e perfil de usuários;
-* adicionar validação de endereço com API de mapas;
-* permitir edição e exclusão de pontos de coleta;
-* criar um painel administrativo para gestão dos registros.
+- autenticação e perfil de usuários;
+- painel administrativo para gestão de pontos;
+- edição e remoção de registros;
+- validação mais robusta de endereço e itens;
+- aumento da escalabilidade e organização de rotas.
 
 ## Referências Bibliográficas
 
-* Documentação oficial Node.js. https://nodejs.org/
-* Express.js Guide. https://expressjs.com/
-* Nunjucks documentation. https://mozilla.github.io/nunjucks/
-* SQLite Documentation. https://www.sqlite.org/docs.html
+- Node.js Documentation
+- Express.js Guide
+- Nunjucks Documentation
+- SQLite Documentation
+- OpenStreetMap Nominatim API
+- API do IBGE
