@@ -78,7 +78,7 @@ main .card h3{
     font-family: Roboto;
     font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 28px;
     color: var(--primary-blue-dark);
     background: var(--light-blue);
